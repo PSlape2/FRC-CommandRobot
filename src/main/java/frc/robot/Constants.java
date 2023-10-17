@@ -14,6 +14,46 @@ package frc.robot;
  */
 public final class Constants {
   public static class OperatorConstants {
+
+        // Driver Constants
     public static final int kDriverControllerPort = 0;
+
+        // Operator Constants
+    public static final int kOperatorControllerPort = 1;
+    public static final double kOperatorElevatorDeadZone = 0.2;
+    public static final double kOperatorElevatorCurve = 0.5;
+    public static final double kOperatorElevatorInitialValue = 0;
+  }
+
+  public static class IntakeConstants {
+    public static final int kIntakePort = 3;
+    public static final int kCurrentLimit = 45;
+
+        // Constant speeds for intake
+    public static final double kInSpeed = 0.5;
+    public static final double kOutSpeed = -0.5;
+  }
+
+  public static class ElevatorConstants {
+    public static final int kElevatorPort = 4;    // Elevator motor port
+    public static final int kCurrentLimit = 45;   // Current limits
+
+        // Constants for ElevatorFeedForward
+    public static final double kS = 0.5;
+    public static final double kG = 0.5;
+    public static final double kV = 0.5;
+    public static final double kA = 0;
+
+        // Constants for SparkMaxPIDController
+    public static final double kP = 0.5;    // Proportional constant
+    public static final double kI = 0.5;    // Integral constant
+    public static final double kD = 0.5;    // Derivative constant
+    public static final double kFF = 0.5;   // Feedforward constant
+    public static final double kMax = 10;   // Max PID output limit (currently used for position)
+    public static final double kMin = 0;    // Min PID output limit (currently used for position)
+
+    public static final double kPredef_low = 10;
+    public static final double kPredef_mid = 20;
+    public static final double kPredef_high = 30;
   }
 }
