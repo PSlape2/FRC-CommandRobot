@@ -17,6 +17,9 @@ public final class Constants {
 
         // Driver Constants
     public static final int kDriverControllerPort = 0;
+    public static final double kDriverTankDriveDeadZone = 0.2;
+    public static final double kDriverTankDriveMax = 0.7;
+    public static final double kDriverTankDriveCurve = 1.8;
 
         // Operator Constants
     public static final int kOperatorControllerPort = 1;
@@ -33,7 +36,16 @@ public final class Constants {
     public static final double kInSpeed = 0.5;
     public static final double kOutSpeed = -0.5;
   }
+  public static class TankDriveConstants {
+    public static final int[] motorPorts = {5, 6, 7, 8};
+    public static final int kCurrentLimit = 45;
 
+    public static final double kP = 0.5;    // Proportional constant
+    public static final double kI = 0.5;    // Integral constant
+    public static final double kD = 0.5;    // Derivative constant
+    public static final double kMax = 1;    // Max PID output limit
+    public static final double kMin = -1;   // Min PID output limit
+  }
   public static class ElevatorConstants {
     public static final int kElevatorPort = 4;    // Elevator motor port
     public static final int kCurrentLimit = 45;   // Current limits

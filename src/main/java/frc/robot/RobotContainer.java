@@ -5,9 +5,13 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.TankDriveSubsystem;
 import frc.robot.commands.Autos;
+import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.TankDriveCommand;
 import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -28,6 +32,9 @@ public class RobotContainer {
 
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
+  private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
+
+  private final TankDriveSubsystem tankDriveSubsystem = new TankDriveSubsystem();
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
@@ -36,6 +43,23 @@ public class RobotContainer {
         intakeSubsystem, 
         () -> m_operatorController.getLeftBumperPressed(),
         () -> m_operatorController.getRightBumperPressed()
+      )
+    );
+
+    elevatorSubsystem.setDefaultCommand(
+      new ElevatorCommand(
+        elevatorSubsystem,
+        () -> m_operatorController.getAButtonPressed(),
+        () -> m_operatorController.getXButtonPressed(),
+        () -> m_operatorController.getYButtonPressed()
+      )
+    );
+
+    tankDriveSubsystem.setDefaultCommand(
+      new TankDriveCommand(
+        tankDriveSubsystem,
+        () -> m_driverController.getLeftY(),
+        () -> m_driverController.getRightY()
       )
     );
     // Configure the trigger bindings
