@@ -36,6 +36,7 @@ public final class Constants {
     public static final double kInSpeed = 0.5;
     public static final double kOutSpeed = -0.5;
   }
+
   public static class TankDriveConstants {
     public static final int[] motorPorts = {5, 6, 7, 8};
     public static final int kCurrentLimit = 45;
@@ -46,6 +47,7 @@ public final class Constants {
     public static final double kMax = 1;    // Max PID output limit
     public static final double kMin = -1;   // Min PID output limit
   }
+
   public static class ElevatorConstants {
     public static final int kElevatorPort = 4;    // Elevator motor port
     public static final int kCurrentLimit = 45;   // Current limits
@@ -74,5 +76,16 @@ public final class Constants {
     private static final double kSprocketRadius = 0.2;
     public static final double kPositionConversionFactor = 2 * Math.PI * kSprocketRadius * (1.0 / 8.0);
     public static final double kVelocityConversionFactor = kPositionConversionFactor / 60.0; 
+  }
+
+  public static class ShooterConstants {
+    public static final int[] shooterPorts = {6, 7};
+    public static final double kErrorTolerance = 5;
+
+    public static final double kS = 0.5;
+    public static final double kV = 0.5;
+    public static final double kA = 0;
+    
+    public static final double kShooterSpeed = 5;
   }
 }
