@@ -67,5 +67,12 @@ public final class Constants {
     public static final double kPredef_low = 10;
     public static final double kPredef_mid = 20;
     public static final double kPredef_high = 30;
+
+    public static final double kErrorTolerance = 5;
+    public static final double kDerivativeTolerance = 10;
+
+    private static final double kSprocketRadius = 0.2;
+    public static final double kPositionConversionFactor = 2 * Math.PI * kSprocketRadius * (1.0 / 8.0);
+    public static final double kVelocityConversionFactor = kPositionConversionFactor / 60.0; 
   }
 }

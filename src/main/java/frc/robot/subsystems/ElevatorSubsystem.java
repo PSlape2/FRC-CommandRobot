@@ -1,5 +1,8 @@
 package frc.robot.subsystems;
 
+import javax.lang.model.element.Element;
+
+import com.fasterxml.jackson.databind.deser.std.ContainerDeserializerBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -8,57 +11,74 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.ElevatorFeedforward;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
 
 public class ElevatorSubsystem extends SubsystemBase {
     private CANSparkMax elevatorMotor;
-    // private ElevatorFeedforward feedforward;
+    private ElevatorFeedforward feedforward;
     private RelativeEncoder elevatorEncoder;
-    private SparkMaxPIDController pid;
+    private ProfiledPIDController elevatorController;
+    private TrapezoidProfile.Constraints elevatorProfile;
 
+    private double lastTime = Timer.getFPGATimestamp();
+    private double lastSpeed = 0;
+    
     public ElevatorSubsystem() {
         elevatorMotor = new CANSparkMax(ElevatorConstants.kElevatorPort, MotorType.kBrushless);
         elevatorMotor.restoreFactoryDefaults();
         elevatorMotor.setSmartCurrentLimit(ElevatorConstants.kCurrentLimit);
         elevatorMotor.setIdleMode(IdleMode.kBrake);
 
-        pid = elevatorMotor.getPIDController();
-        pid.setP(ElevatorConstants.kP);
-        pid.setI(ElevatorConstants.kI);
-        pid.setD(ElevatorConstants.kD);
-        pid.setFF(ElevatorConstants.kFF);
-        pid.setOutputRange(ElevatorConstants.kMin, ElevatorConstants.kMax);
-
         elevatorEncoder = elevatorMotor.getEncoder();
-        /*
+        elevatorEncoder.setPositionConversionFactor(ElevatorConstants.kPositionConversionFactor);
+        elevatorEncoder.setVelocityConversionFactor(ElevatorConstants.kVelocityConversionFactor);
+
+        elevatorProfile = new TrapezoidProfile.Constraints(ElevatorConstants.kMax, ElevatorConstants.kMin);
+
+        elevatorController = new ProfiledPIDController(
+            ElevatorConstants.kP,
+            ElevatorConstants.kI,
+            ElevatorConstants.kD,
+            elevatorProfile
+        );
+
+        elevatorController.setTolerance(
+            ElevatorConstants.kErrorTolerance, ElevatorConstants.kDerivativeTolerance
+        );
         
         feedforward = new ElevatorFeedforward(
-            ElevatorConstants.kS, ElevatorConstants.kG, ElevatorConstants.kV, ElevatorConstants.kA);
-        */
+            ElevatorConstants.kS,
+            ElevatorConstants.kG,
+            ElevatorConstants.kV,
+            ElevatorConstants.kA
+        );
     }
-    public void setElevatorSpeed(double speed) {
-        elevatorMotor.set(speed);
-    }
-    public double getElevatorSpeed() {
-        return elevatorMotor.get();
+    public void goTo(double pos) {
+        double acceleration = (elevatorController.getSetpoint().velocity - lastSpeed) / (Timer.getFPGATimestamp() - lastTime);
+
+        elevatorMotor.setVoltage(
+            elevatorController.calculate(elevatorEncoder.getVelocity(), pos)
+             + feedforward.calculate(elevatorController.getSetpoint().velocity, acceleration)
+        );
+
+        lastSpeed = elevatorController.getSetpoint().velocity;
+        lastTime = Timer.getFPGATimestamp();
     }
     public void stopElevator() {
         elevatorMotor.stopMotor();
     }
-    public void setPIDTarget(double target) {
-        pid.setReference(target, ControlType.kPosition);
-    }
-    public void setPIDTargetSpeed(double speed) {
-        pid.setReference(speed, ControlType.kVelocity);
-    }
-    public void setPIDTargetVoltage(double voltage) {
-        pid.setReference(voltage, ControlType.kVoltage);
+    public TrapezoidProfile.State getState() {
+        return elevatorController.getSetpoint();
     }
     public double getPosition() {
-        return elevatorEncoder.getPosition();
+        return elevatorController.getSetpoint().position;
     }
     public double getVelocity() {
-        return elevatorEncoder.getVelocity();
+        return elevatorController.getSetpoint().velocity;
     }
 }
