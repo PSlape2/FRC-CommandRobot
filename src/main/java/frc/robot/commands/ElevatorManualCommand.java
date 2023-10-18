@@ -24,7 +24,9 @@ public class ElevatorManualCommand extends CommandBase {
         double inValue = elevatorSupplier.get();
 
         if(inValue > OperatorConstants.kOperatorElevatorDeadZone) {
-            
+            elevatorSubsystem.goTo(
+                InputSystem.calculateInputWithCurve(inValue. OperatorConstants.kOperatorElevatorCurve);
+            );
         }
     }
 }

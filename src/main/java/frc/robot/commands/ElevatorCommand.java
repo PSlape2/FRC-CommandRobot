@@ -28,6 +28,8 @@ public class ElevatorCommand extends CommandBase{
             elevatorSubsystem.goTo(ElevatorConstants.kPredef_mid);
         } else if(highPositionSupplier.get()) {
             elevatorSubsystem.goTo(ElevatorConstants.kPredef_high);
+        } else {
+            elevatorSubsystem.stop();   
         }
     }
 
