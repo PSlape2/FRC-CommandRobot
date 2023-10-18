@@ -18,6 +18,7 @@ public class ElevatorManualCommand extends CommandBase {
     public ElevatorManualCommand(ElevatorSubsystem elevatorSubsystem, Supplier<Double> elevatorSupplier) {
         this.elevatorSubsystem = elevatorSubsystem;
         this.elevatorSupplier = elevatorSupplier;
+        addRequirements(elevatorSubsystem);
     }
 
     public void execute() {
@@ -28,5 +29,10 @@ public class ElevatorManualCommand extends CommandBase {
                 InputSystem.calculateInputWithCurve(inValue. OperatorConstants.kOperatorElevatorCurve);
             );
         }
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        elevatorSubsystem.stopElevator();
     }
 }

@@ -19,6 +19,7 @@ public class ElevatorCommand extends CommandBase{
         this.lowPositionSupplier = lowPositionSupplier;
         this.midPositionSupplier = midPositionSupplier;
         this.highPositionSupplier = highPositionSupplier;
+        addRequirements(elevatorSubsystem);
     } 
     
     public void execute() {
