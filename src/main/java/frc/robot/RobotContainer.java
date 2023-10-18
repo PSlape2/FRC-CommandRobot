@@ -35,7 +35,10 @@ public class RobotContainer {
   private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
 
   private final TankDriveSubsystem tankDriveSubsystem = new TankDriveSubsystem();
+
+  private final  ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
+
   public RobotContainer() {
 
     intakeSubsystem.setDefaultCommand(
@@ -62,6 +65,15 @@ public class RobotContainer {
         () -> m_driverController.getRightY()
       )
     );
+    /*
+    shooterSubsystem.setDefaultCommand(
+      new ShooterCommand(
+        shooterSubsystem,
+        () -> m_operatorController.get
+      );
+    );
+    */
+
     // Configure the trigger bindings
     configureBindings();
   }
