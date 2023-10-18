@@ -18,18 +18,21 @@ public class ElevatorManualCommand extends CommandBase {
     public ElevatorManualCommand(ElevatorSubsystem elevatorSubsystem, Supplier<Double> elevatorSupplier) {
         this.elevatorSubsystem = elevatorSubsystem;
         this.elevatorSupplier = elevatorSupplier;
+        addRequirements(elevatorSubsystem);
     }
 
     public void execute() {
         double inValue = elevatorSupplier.get();
+
         if(inValue > OperatorConstants.kOperatorElevatorDeadZone) {
-            elevatorSubsystem.setElevatorSpeed(
-                InputSystem.calculateInputWithCurve(
-                    inValue, OperatorConstants.kOperatorElevatorCurve
-                )
+            elevatorSubsystem.goTo(
+                InputSystem.calculateInputWithCurve(inValue. OperatorConstants.kOperatorElevatorCurve);
             );
-        } else {
-            elevatorSubsystem.stopElevator();
         }
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        elevatorSubsystem.stopElevator();
     }
 }
