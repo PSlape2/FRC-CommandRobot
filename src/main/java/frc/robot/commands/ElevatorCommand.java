@@ -23,11 +23,11 @@ public class ElevatorCommand extends CommandBase{
     
     public void execute() {
         if(lowPositionSupplier.get()) {
-            elevatorSubsystem.setPIDTarget(ElevatorConstants.kPredef_low);
+            elevatorSubsystem.goTo(ElevatorConstants.kPredef_low);
         } else if(midPositionSupplier.get()) {
-            elevatorSubsystem.setPIDTarget(ElevatorConstants.kPredef_mid);
+            elevatorSubsystem.goTo(ElevatorConstants.kPredef_mid);
         } else if(highPositionSupplier.get()) {
-            elevatorSubsystem.setPIDTarget(ElevatorConstants.kPredef_high);
+            elevatorSubsystem.goTo(ElevatorConstants.kPredef_high);
         }
     }
 

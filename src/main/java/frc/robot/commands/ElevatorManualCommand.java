@@ -22,14 +22,9 @@ public class ElevatorManualCommand extends CommandBase {
 
     public void execute() {
         double inValue = elevatorSupplier.get();
+
         if(inValue > OperatorConstants.kOperatorElevatorDeadZone) {
-            elevatorSubsystem.setElevatorSpeed(
-                InputSystem.calculateInputWithCurve(
-                    inValue, OperatorConstants.kOperatorElevatorCurve
-                )
-            );
-        } else {
-            elevatorSubsystem.stopElevator();
+            
         }
     }
 }
