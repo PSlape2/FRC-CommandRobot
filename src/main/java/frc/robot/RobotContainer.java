@@ -4,15 +4,10 @@
 
 package frc.robot;
 
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
+
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.subsystems.ElevatorSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.TankDriveSubsystem;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ElevatorCommand;
-import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.TankDriveCommand;
-import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -65,14 +60,14 @@ public class RobotContainer {
         () -> m_driverController.getRightY()
       )
     );
-    /*
+    
     shooterSubsystem.setDefaultCommand(
       new ShooterCommand(
         shooterSubsystem,
-        () -> m_operatorController.get
-      );
+        () -> m_operatorController.getRightTriggerAxis()
+      )
     );
-    */
+    
 
     // Configure the trigger bindings
     configureBindings();

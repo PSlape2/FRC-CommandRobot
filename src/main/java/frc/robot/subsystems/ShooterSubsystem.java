@@ -4,6 +4,7 @@ import frc.robot.Constants.ShooterConstants;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.BangBangController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
@@ -15,11 +16,11 @@ public class ShooterSubsystem extends SubsystemBase {
     private CANSparkMax rightShooter, leftShooter;
     private BangBangController shooterController;
     private RelativeEncoder leftEncoder, rightEncoder;
-    private SimpleMotorFeedForward feedforward;
+    private SimpleMotorFeedforward feedforward;
 
     public void execute() {
-        rightShooter =  new CANSparkMax(ShooterConstants.motorPorts[0], MotorType.kBrushless);
-        leftShooter  = new CANSparkMax(ShooterConstants.motorPorts[1], MotorType.kBrushless);
+        rightShooter =  new CANSparkMax(ShooterConstants.shooterPorts[0], MotorType.kBrushless);
+        leftShooter  = new CANSparkMax(ShooterConstants.shooterPorts[1], MotorType.kBrushless);
 
         rightShooter.setSmartCurrentLimit(ShooterConstants.kCurrentLimit);
         rightShooter.setIdleMode(IdleMode.kCoast);
@@ -32,11 +33,11 @@ public class ShooterSubsystem extends SubsystemBase {
         rightEncoder = rightShooter.getEncoder();
         leftEncoder = leftShooter.getEncoder();
         shooterController = new BangBangController(ShooterConstants.kErrorTolerance);
-        feedforward = new SimpleMotorFeedForward(ShooterConstants.kS, ShooterConstants.kV, ShooterConstants.kA);
+        feedforward = new SimpleMotorFeedforward(ShooterConstants.kS, ShooterConstants.kV, ShooterConstants.kA);
     }
     public void setSpeed(double speed) {
         rightShooter.setVoltage(
-            shooterController.calculate(rightEncoder.getVelocity(), speed))
+            shooterController.calculate(rightEncoder.getVelocity(), speed)
                 + 0.9 * feedforward.calculate(speed)
         );
 

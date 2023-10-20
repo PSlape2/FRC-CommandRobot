@@ -26,6 +26,7 @@ public final class Constants {
     public static final double kOperatorElevatorDeadZone = 0.2;
     public static final double kOperatorElevatorCurve = 0.5;
     public static final double kOperatorElevatorInitialValue = 0;
+    public static final double kShooterDeadzone = 0.1;
   }
 
   public static class IntakeConstants {
@@ -81,6 +82,7 @@ public final class Constants {
   public static class ShooterConstants {
     public static final int[] shooterPorts = {6, 7};
     public static final double kErrorTolerance = 5;
+    public static final int kCurrentLimit = 10;
 
     public static final double kS = 0.5;
     public static final double kV = 0.5;
