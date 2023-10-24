@@ -19,23 +19,29 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+  /** The container for the robot. Contains subsystems, IO devices, and commands. */
+
   public final XboxController m_driverController =
       new XboxController(OperatorConstants.kDriverControllerPort);
   
   public final XboxController m_operatorController =
     new XboxController(OperatorConstants.kOperatorControllerPort);
 
-  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  // private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
   private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
 
   private final TankDriveSubsystem tankDriveSubsystem = new TankDriveSubsystem();
 
   private final  ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+
+  private final ClawSubsystem clawSubsystem = new ClawSubsystem();
+
+  
 
   public RobotContainer() {
 
+    /*
     intakeSubsystem.setDefaultCommand(
       new IntakeCommand(
         intakeSubsystem, 
@@ -43,6 +49,7 @@ public class RobotContainer {
         () -> m_operatorController.getRightBumperPressed()
       )
     );
+    */
 
     elevatorSubsystem.setDefaultCommand(
       new ElevatorCommand(
@@ -68,6 +75,14 @@ public class RobotContainer {
       )
     );
     
+    clawSubsystem.setDefaultCommand(
+      new ClawCommand(
+        clawSubsystem,
+        () -> m_operatorController.getLeftBumperPressed(),
+        () -> m_operatorController.getRightBumperReleased(),
+        () -> m_operatorController.getBButtonReleased()
+      )
+    );
 
     // Configure the trigger bindings
     configureBindings();

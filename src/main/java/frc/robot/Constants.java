@@ -90,4 +90,10 @@ public final class Constants {
     
     public static final double kShooterSpeed = 5;
   }
+  public static class ClawConstants {
+    public static final int kPort = 22;
+    public static final double kSpeed = 2;
+    public static final int kCurrentLimit = 2;
+
+  }
 }
