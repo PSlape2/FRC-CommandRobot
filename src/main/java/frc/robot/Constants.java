@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.DigitalSource;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -38,7 +41,7 @@ public final class Constants {
     public static final double kOutSpeed = -0.5;
   }
 
-  public static class TankDriveConstants {
+  public static class DriveConstants {
     public static final int[] motorPorts = {5, 6, 7, 8};
     public static final int kCurrentLimit = 45;
 
@@ -47,6 +50,13 @@ public final class Constants {
     public static final double kD = 0.5;    // Derivative constant
     public static final double kMax = 1;    // Max PID output limit
     public static final double kMin = -1;   // Min PID output limit
+    public static final int[] kLeftEncoderPorts = {0, 1};
+    public static final int[] kRightEncoderPorts = {2, 3};
+    public static final boolean kLeftEncoderReversed = true;
+    public static final boolean kRightEncoderReversed = false;
+    public static final double kDistancePerPulse = 0.5;
+
+    public static final double kTrackWidth = 0.69; // In meters
   }
 
   public static class ElevatorConstants {
@@ -84,9 +94,9 @@ public final class Constants {
     public static final double kErrorTolerance = 5;
     public static final int kCurrentLimit = 10;
 
-    public static final double kS = 0.5;
-    public static final double kV = 0.5;
-    public static final double kA = 0;
+    public static final double kS = 0.5; // Volts
+    public static final double kV = 0.5; // Volt Seconds per Meter
+    public static final double kA = 0; // Volt Seconds Squared per Meter
     
     public static final double kShooterSpeed = 5;
   }
@@ -95,5 +105,16 @@ public final class Constants {
     public static final double kSpeed = 2;
     public static final int kCurrentLimit = 2;
 
+  }
+  public static class AutoConstants {
+    public static final double kS = 0.22;
+    public static final double kV = 1.98;
+    public static final double kA = 0.2;
+
+    public static final double kDriveVelocity = 8.5;
+    public static final double kMaxSpeed = 3; // Meters per second
+    public static final double kMaxAccel = 1; // Meters per second squared
+    public static final double kRamseteB = 2; // Meters
+    public static final double kRamseteZ = 0.7; // Seconds
   }
 }

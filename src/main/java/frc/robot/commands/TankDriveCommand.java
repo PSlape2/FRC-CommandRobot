@@ -4,14 +4,14 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.subsystems.TankDriveSubsystem;
+import frc.robot.subsystems.DriveSubsystem;
 
 public class TankDriveCommand extends CommandBase {
-    private final TankDriveSubsystem tankDriveSubsystem;
+    private final DriveSubsystem tankDriveSubsystem;
     private final Supplier<Double> leftInput, rightInput;
     
     public TankDriveCommand(
-        TankDriveSubsystem tankDriveSubsystem, 
+        DriveSubsystem tankDriveSubsystem, 
         Supplier<Double> leftInput, Supplier<Double> rightInput
     ) {
         this.tankDriveSubsystem = tankDriveSubsystem;
@@ -33,7 +33,7 @@ public class TankDriveCommand extends CommandBase {
             rightOut = 0;
         }
 
-        tankDriveSubsystem.setSpeed(leftOut, rightOut);
+        tankDriveSubsystem.tankDrive(leftOut, rightOut);
     }
     public double processInput(double in) {
         return OperatorConstants.kDriverTankDriveMax * Math.pow(in, OperatorConstants.kDriverTankDriveCurve);

@@ -31,7 +31,7 @@ public class RobotContainer {
 
   private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
 
-  private final TankDriveSubsystem tankDriveSubsystem = new TankDriveSubsystem();
+  public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
 
   private final  ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
@@ -60,9 +60,9 @@ public class RobotContainer {
       )
     );
 
-    tankDriveSubsystem.setDefaultCommand(
+    driveSubsystem.setDefaultCommand(
       new TankDriveCommand(
-        tankDriveSubsystem,
+        driveSubsystem,
         () -> m_driverController.getLeftY(),
         () -> m_driverController.getRightY()
       )
