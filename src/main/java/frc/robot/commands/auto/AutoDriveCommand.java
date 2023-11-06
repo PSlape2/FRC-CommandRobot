@@ -20,9 +20,10 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
 
-public class AutoDriveCommand {
+public final class AutoDriveCommand {
     public static Command getAutoCommand() {
         DriveSubsystem driveSubsystem = RobotContainer.driveSubsystem;
+
         DifferentialDriveKinematics driveKinematics =
             new DifferentialDriveKinematics(DriveConstants.kTrackWidth);
 
@@ -61,10 +62,10 @@ public class AutoDriveCommand {
                     AutoConstants.kA
                 ),
                 driveKinematics,
-                driveSubsystem::getWheelSpeed,
+                driveSubsystem::getWheelSpeed, // This is a lambda
                 new PIDController(AutoConstants.kDriveVelocity, 0, 0),
                 new PIDController(AutoConstants.kDriveVelocity, 0, 0),
-                driveSubsystem::tankDriveVolts,
+                driveSubsystem::tankDriveVolts, // This is a lambda
                 driveSubsystem
             );
         driveSubsystem.resetOdometry(exampleTrajecory.getInitialPose());
