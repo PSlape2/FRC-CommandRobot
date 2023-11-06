@@ -22,7 +22,7 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
 
-public final class AutoDriveCommand {
+public final class AutoDriveCommandContainer {
     public static Command getAutoCommand() {
         DriveSubsystem driveSubsystem = RobotContainer.driveSubsystem;
 
