@@ -9,7 +9,12 @@ import frc.robot.commands.auto.AutoDriveCommand;
 import frc.robot.subsystems.*;
 
 import frc.robot.Constants.OperatorConstants;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -38,9 +43,12 @@ public class RobotContainer {
 
   private final ClawSubsystem clawSubsystem = new ClawSubsystem();
 
-  
+  private final SendableChooser<Command> autoChooser;
 
   public RobotContainer() {
+
+    autoChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Chooser", autoChooser);
 
     /*
     intakeSubsystem.setDefaultCommand(
@@ -109,6 +117,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return AutoDriveCommand.getAutoCommand();
+    return autoChooser.getSelected();
   }
+
 }

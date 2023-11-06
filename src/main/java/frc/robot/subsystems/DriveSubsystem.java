@@ -1,11 +1,15 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.util.ReplanningConfig;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.Encoder;
@@ -34,7 +38,12 @@ public class DriveSubsystem extends SubsystemBase {
 
     private final AHRS gyro = new AHRS(SPI.Port.kMXP);
 
+    DifferentialDriveKinematics driveKinematics =
+            new DifferentialDriveKinematics(DriveConstants.kTrackWidth);
+
     private final DifferentialDriveOdometry odometry;
+
+    private DifferentialDriveWheelSpeeds wheelSpeeds, targetWheelSpeeds;
 
     public DriveSubsystem() {
     
@@ -59,6 +68,15 @@ public class DriveSubsystem extends SubsystemBase {
             leftEncoder.getDistance(),
             rightEncoder.getDistance()
         );
+
+         AutoBuilder.configureRamsete(
+            this::getPose,
+            this::resetOdometry,
+            this::getChassisSpeeds,
+            this::setChassisSpeeds,
+            new ReplanningConfig(),
+            this
+         );
     }
     public void tankDrive(double l_speed, double r_speed) {
         differentialDrive.tankDrive(l_speed, r_speed);
@@ -79,17 +97,27 @@ public class DriveSubsystem extends SubsystemBase {
             leftEncoder.getDistance(),
             rightEncoder.getDistance()
         );
+
+        wheelSpeeds = new DifferentialDriveWheelSpeeds(
+            leftEncoder.getRate(),
+            rightEncoder.getRate()
+        );
     }
 
     public Pose2d getPose() {
         return odometry.getPoseMeters();
     }
 
-    public DifferentialDriveWheelSpeeds getWheelSpeed() {
-        return new DifferentialDriveWheelSpeeds(
-            leftEncoder.getRate(),
-            rightEncoder.getRate()
-        );
+    public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+        return wheelSpeeds;
+    }
+
+    public ChassisSpeeds getChassisSpeeds() {
+        return driveKinematics.toChassisSpeeds(getWheelSpeeds());
+    }
+
+    public void setChassisSpeeds(ChassisSpeeds chassisSpeeds) {
+        targetWheelSpeeds = driveKinematics.toWheelSpeeds(chassisSpeeds);
     }
 
     public void resetOdometry(Pose2d newPose) {
@@ -99,6 +127,15 @@ public class DriveSubsystem extends SubsystemBase {
             leftEncoder.getDistance(),
             rightEncoder.getDistance(),
             newPose
+        );
+    }
+    public void resetOdometry() {
+        resetEncoders();
+        odometry.resetPosition(
+            gyro.getRotation2d(),
+            leftEncoder.getDistance(),
+            rightEncoder.getDistance(),
+            new Pose2d()
         );
     }
 
@@ -126,5 +163,9 @@ public class DriveSubsystem extends SubsystemBase {
 
     public double getTurnRate() {
         return -gyro.getRate();
+    }
+
+    public double getAverageRate() {
+        return (leftEncoder.getRate() + rightEncoder.getRate()) / 2.0;
     }
 }

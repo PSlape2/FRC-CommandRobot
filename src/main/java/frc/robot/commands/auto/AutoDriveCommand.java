@@ -2,6 +2,8 @@ package frc.robot.commands.auto;
 
 import java.util.List;
 
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -62,7 +64,7 @@ public final class AutoDriveCommand {
                     AutoConstants.kA
                 ),
                 driveKinematics,
-                driveSubsystem::getWheelSpeed, // This is a lambda
+                driveSubsystem::getWheelSpeeds, // This is a lambda
                 new PIDController(AutoConstants.kDriveVelocity, 0, 0),
                 new PIDController(AutoConstants.kDriveVelocity, 0, 0),
                 driveSubsystem::tankDriveVolts, // This is a lambda
@@ -71,5 +73,9 @@ public final class AutoDriveCommand {
         driveSubsystem.resetOdometry(exampleTrajecory.getInitialPose());
 
         return ramCommand.andThen(() -> driveSubsystem.tankDriveVolts(0,0));
+    }
+
+    public static Command getAutoPathPlannerCommand() {
+        return new PathPlannerAuto("Basic Drive Path"); // Couldn't change the name??
     }
 }
