@@ -2,6 +2,9 @@ package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.FollowPathRamsete;
+import com.pathplanner.lib.commands.FollowPathWithEvents;
+import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.ReplanningConfig;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -16,6 +19,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
@@ -78,12 +82,15 @@ public class DriveSubsystem extends SubsystemBase {
             this
          );
     }
+
     public void tankDrive(double l_speed, double r_speed) {
         differentialDrive.tankDrive(l_speed, r_speed);
     }
+
     public void arcadeDrive(double speed, double rotation) {
         differentialDrive.arcadeDrive(speed, rotation);
     }
+
     public void tankDriveVolts(double leftVolt, double rightVolt) {
         left.setVoltage(leftVolt);
         right.setVoltage(rightVolt);
@@ -118,6 +125,8 @@ public class DriveSubsystem extends SubsystemBase {
 
     public void setChassisSpeeds(ChassisSpeeds chassisSpeeds) {
         targetWheelSpeeds = driveKinematics.toWheelSpeeds(chassisSpeeds);
+        left.set(targetWheelSpeeds.leftMetersPerSecond);
+        right.set(targetWheelSpeeds.rightMetersPerSecond);
     }
 
     public void resetOdometry(Pose2d newPose) {
@@ -167,5 +176,26 @@ public class DriveSubsystem extends SubsystemBase {
 
     public double getAverageRate() {
         return (leftEncoder.getRate() + rightEncoder.getRate()) / 2.0;
+    }
+
+    public Command followAutoBuilderPathCommand() {
+        return AutoBuilder.followPathWithEvents(
+            PathPlannerPath.fromPathFile("Basic Drive Path")
+        );
+    }
+    public Command followPathCommand() {
+        PathPlannerPath path = PathPlannerPath.fromPathFile("Basic Drive Path");
+        return new FollowPathWithEvents(
+            new FollowPathRamsete(
+                path,
+                this::getPose,
+                this::getChassisSpeeds,
+                this::setChassisSpeeds,
+                new ReplanningConfig(),
+                this
+            ),
+            path,
+            this::getPose
+        );
     }
 }

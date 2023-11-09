@@ -3,6 +3,7 @@ package frc.robot.commands.auto;
 import java.util.List;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
@@ -23,6 +24,12 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
 
 public final class AutoDriveCommandContainer {
+
+    /**
+     * Unused
+     * 
+     * @return A Ramsete command
+     */
     public static Command getAutoCommand() {
         DriveSubsystem driveSubsystem = RobotContainer.driveSubsystem;
 
@@ -73,9 +80,5 @@ public final class AutoDriveCommandContainer {
         driveSubsystem.resetOdometry(exampleTrajecory.getInitialPose());
 
         return ramCommand.andThen(() -> driveSubsystem.tankDriveVolts(0,0));
-    }
-
-    public static Command getAutoPathPlannerCommand() {
-        return new PathPlannerAuto("Basic Drive Path"); // Couldn't change the name??
     }
 }
