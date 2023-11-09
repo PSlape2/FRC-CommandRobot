@@ -17,7 +17,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private RelativeEncoder leftEncoder, rightEncoder;
     private SimpleMotorFeedforward feedforward;
 
-    public void execute() {
+    public ShooterSubsystem() {
         rightShooter =  new CANSparkMax(ShooterConstants.shooterPorts[0], MotorType.kBrushless);
         leftShooter  = new CANSparkMax(ShooterConstants.shooterPorts[1], MotorType.kBrushless);
 
@@ -34,6 +34,11 @@ public class ShooterSubsystem extends SubsystemBase {
         shooterController = new BangBangController(ShooterConstants.kErrorTolerance);
         feedforward = new SimpleMotorFeedforward(ShooterConstants.kS, ShooterConstants.kV, ShooterConstants.kA);
     }
+
+    /**
+     * Sets the speed of the shooter with feedforward
+     * @param speed The target speed for the shooter
+     */
     public void setSpeed(double speed) {
         rightShooter.setVoltage(
             shooterController.calculate(rightEncoder.getVelocity(), speed)

@@ -14,6 +14,13 @@ public class ClawCommand extends CommandBase {
     private boolean direction, shouldRun;
     private int gamePieceType;
 
+    /**
+     * Creates a new ClawCommand object
+     * @param clawSubsystem The claw subsystem
+     * @param shouldIntake A Supplier which provides a boolean value
+     * @param switchDirection A Supplier which provides a boolean value
+     * @param gamePieceSupplier A Supplier which provides a boolean value
+     */
     public ClawCommand(
         ClawSubsystem clawSubsystem,
         Supplier<Boolean> shouldIntake,
@@ -32,8 +39,11 @@ public class ClawCommand extends CommandBase {
         addRequirements(clawSubsystem);
     }
 
-    // Use get bumper released
-
+    /**
+     * Primary section for the Claw to run. Takes care of
+     * which game piece type along with if the claw should
+     * intake or outtake.
+     */
     public void execute() {
 
         if(gamePieceSupplier.get()) {
@@ -71,7 +81,6 @@ public class ClawCommand extends CommandBase {
 
         setDashboard();
     }
-
 
     private void setDashboard() {
         SmartDashboard.putBoolean("Claw Direction", direction);

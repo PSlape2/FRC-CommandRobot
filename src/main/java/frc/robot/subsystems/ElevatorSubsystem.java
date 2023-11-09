@@ -52,6 +52,11 @@ public class ElevatorSubsystem extends SubsystemBase {
             ElevatorConstants.kA
         );
     }
+
+    /**
+     * Sets the elevator to a specific position
+     * @param pos The position to set to
+     */
     public void goTo(double pos) {
         double acceleration = (elevatorController.getSetpoint().velocity - lastSpeed) / (Timer.getFPGATimestamp() - lastTime);
 
@@ -63,15 +68,34 @@ public class ElevatorSubsystem extends SubsystemBase {
         lastSpeed = elevatorController.getSetpoint().velocity;
         lastTime = Timer.getFPGATimestamp();
     }
+
+    /**
+     * Stops the elevator
+     */
     public void stopElevator() {
         elevatorMotor.stopMotor();
     }
+
+    /**
+     * Gets the state of the TrapezoidProfile
+     * @return The setpoint of the PID controller
+     */
     public TrapezoidProfile.State getState() {
         return elevatorController.getSetpoint();
     }
+
+    /**
+     * Gets the position of the elevator
+     * @return The position of the elevator
+     */
     public double getPosition() {
         return elevatorController.getSetpoint().position;
     }
+
+    /**
+     * Gets the velocity of the elevator
+     * @return The velocity of the elevator
+     */
     public double getVelocity() {
         return elevatorController.getSetpoint().velocity;
     }

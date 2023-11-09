@@ -30,23 +30,25 @@ public final class Constants {
   }
 
   public static class IntakeConstants {
-    public static final int kIntakePort = 3;
+    public static final int kIntakePort = 12;
     public static final int kCurrentLimit = 45;
 
         // Constant speeds for intake
-    public static final double kInSpeed = 0.5;
-    public static final double kOutSpeed = -0.5;
+    public static final double kInSpeed = 0.8;
+    public static final double kOutSpeed = -0.8;
   }
 
   public static class DriveConstants {
-    public static final int[] motorPorts = {5, 6, 7, 8};
+    public static final int[] motorPorts = {3, 4, 5, 6, 9, 10};
     public static final int kCurrentLimit = 45;
 
-    public static final double kP = 0.5;    // Proportional constant
-    public static final double kI = 0.5;    // Integral constant
-    public static final double kD = 0.5;    // Derivative constant
+        // Constants for PID Controller
+    public static final double kP = 0.28;    // Proportional constant
+    public static final double kI = 0.0;    // Integral constant
+    public static final double kD = 0.055;    // Derivative constant
     public static final double kMax = 1;    // Max PID output limit
     public static final double kMin = -1;   // Min PID output limit
+    
     public static final int[] kLeftEncoderPorts = {0, 1};
     public static final int[] kRightEncoderPorts = {2, 3};
     public static final boolean kLeftEncoderReversed = true;
@@ -61,10 +63,10 @@ public final class Constants {
     public static final int kCurrentLimit = 45;   // Current limits
 
         // Constants for ElevatorFeedForward
-    public static final double kS = 0.5;
+    public static final double kS = 0.22; // Volts
+    public static final double kV = 1.98; // Volt Seconds per Meter
     public static final double kG = 0.5;
-    public static final double kV = 0.5;
-    public static final double kA = 0;
+    public static final double kA = 0.2; // Volt Seconds Squared per Meter
 
         // Constants for SparkMaxPIDController
     public static final double kP = 0.5;    // Proportional constant
@@ -87,15 +89,15 @@ public final class Constants {
   }
 
   public static class ShooterConstants {
-    public static final int[] shooterPorts = {6, 7};
-    public static final double kErrorTolerance = 5;
-    public static final int kCurrentLimit = 10;
+    public static final int[] shooterPorts = {1, 2};
+    public static final double kErrorTolerance = 0.5;
+    public static final int kCurrentLimit = 45;
 
     public static final double kS = 0.5; // Volts
     public static final double kV = 0.5; // Volt Seconds per Meter
     public static final double kA = 0; // Volt Seconds Squared per Meter
     
-    public static final double kShooterSpeed = 5;
+    public static final double kShooterSpeed = 0.6;
   }
   public static class ClawConstants {
     public static final int kPort = 22;

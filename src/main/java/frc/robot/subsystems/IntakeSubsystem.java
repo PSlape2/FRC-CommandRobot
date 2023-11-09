@@ -16,12 +16,26 @@ public class IntakeSubsystem extends SubsystemBase {
         intake.setSmartCurrentLimit(IntakeConstants.kCurrentLimit);
         intake.setIdleMode(IdleMode.kBrake);
     }
+
+    /**
+     * Sets the speed of the intake
+     * @param speed The target speed of the intake
+     */
     public void setIntakeSpeed(double speed) {
         intake.set(speed);
     }
+
+    /**
+     * Gets the speed of the intake
+     * @return The speed of the intake
+     */
     public double getSpeed() {
         return intake.get();
     }
+
+    /**
+     * Stops the intake
+     */
     public void stopIntake() {
         intake.stopMotor();
     }
