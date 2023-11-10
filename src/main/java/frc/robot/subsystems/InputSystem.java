@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 public class InputSystem {
 
-    /*
+    /**
      * Calculates the input with the curve. Uses the formula for logistic (inhibited) growth.
      * 
      * @param curve the amount to curve the input values

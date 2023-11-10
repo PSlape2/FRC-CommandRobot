@@ -47,7 +47,6 @@ public class RobotContainer {
   // private final SendableChooser<Command> autoChooser;
 
   public RobotContainer() {
-
     /*
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
