@@ -93,9 +93,9 @@ public final class Constants {
     public static final double kErrorTolerance = 0.5;
     public static final int kCurrentLimit = 45;
 
-    public static final double kS = 0.5; // Volts
-    public static final double kV = 0.5; // Volt Seconds per Meter
-    public static final double kA = 0; // Volt Seconds Squared per Meter
+    public static final double kS = 0; // Volts
+    public static final double kV = 1; // Volt Seconds per Meter
+    public static final double kA = 1; // Volt Seconds Squared per Meter
     
     public static final double kShooterSpeed = 0.6;
   }

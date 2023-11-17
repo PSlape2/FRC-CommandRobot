@@ -17,6 +17,8 @@ public class TankDriveCommand extends CommandBase {
         this.tankDriveSubsystem = tankDriveSubsystem;
         this.leftInput = leftInput;
         this.rightInput = rightInput;
+
+        addRequirements(tankDriveSubsystem);
     }
     
     public void execute() {

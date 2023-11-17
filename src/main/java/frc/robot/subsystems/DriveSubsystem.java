@@ -59,8 +59,8 @@ public class DriveSubsystem extends SubsystemBase {
             motors[i].setIdleMode(IdleMode.kBrake);
         }
 
-        right = new MotorControllerGroup(new CANSparkMax[] {motors[0], motors[1], motors[2]});
-        left = new MotorControllerGroup(new CANSparkMax[] {motors[3], motors[4], motors[5]});
+        right = new MotorControllerGroup(motors[0], motors[1], motors[2]);
+        left = new MotorControllerGroup(motors[3], motors[4], motors[5]);
         right.setInverted(true);
         differentialDrive = new DifferentialDrive(left, right);
 

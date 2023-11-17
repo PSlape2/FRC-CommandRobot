@@ -42,12 +42,12 @@ public class ShooterSubsystem extends SubsystemBase {
     public void setSpeed(double speed) {
         rightShooter.setVoltage(
             shooterController.calculate(rightEncoder.getVelocity(), speed)
-                + 0.9 * feedforward.calculate(speed)
+                + 0.9 //* feedforward.calculate(speed)
         );
 
         leftShooter.setVoltage(
             shooterController.calculate(leftEncoder.getVelocity(), speed)
-                + 0.9 * feedforward.calculate(speed)
+                + 0.9 //* feedforward.calculate(speed)
         );
     }
 

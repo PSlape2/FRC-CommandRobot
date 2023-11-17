@@ -36,13 +36,13 @@ public class RobotContainer {
 
   // private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
-  private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
+  // private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
 
   public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
 
   private final  ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
-  private final ClawSubsystem clawSubsystem = new ClawSubsystem();
+  // private final ClawSubsystem clawSubsystem = new ClawSubsystem();
 
   // private final SendableChooser<Command> autoChooser;
 
@@ -61,7 +61,7 @@ public class RobotContainer {
       )
     );
     */
-
+    /*
     elevatorSubsystem.setDefaultCommand(
       new ElevatorCommand(
         elevatorSubsystem,
@@ -70,6 +70,7 @@ public class RobotContainer {
         () -> m_operatorController.getYButtonPressed()
       )
     );
+    */
 
     driveSubsystem.setDefaultCommand(
       new TankDriveCommand(
@@ -85,7 +86,7 @@ public class RobotContainer {
         () -> m_operatorController.getRightTriggerAxis()
       )
     );
-    
+    /*
     clawSubsystem.setDefaultCommand(
       new ClawCommand(
         clawSubsystem,
@@ -94,7 +95,7 @@ public class RobotContainer {
         () -> m_operatorController.getBButtonReleased()
       )
     );
-
+    */
     // Configure the trigger bindings
     configureBindings();
   }
