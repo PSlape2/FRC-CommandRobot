@@ -15,7 +15,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private CANSparkMax rightShooter, leftShooter;
     private BangBangController shooterController;
     private RelativeEncoder leftEncoder, rightEncoder;
-    private SimpleMotorFeedforward feedforward;
+    //private SimpleMotorFeedforward feedforward;
 
     public ShooterSubsystem() {
         rightShooter =  new CANSparkMax(ShooterConstants.shooterPorts[0], MotorType.kBrushless);
@@ -32,7 +32,7 @@ public class ShooterSubsystem extends SubsystemBase {
         rightEncoder = rightShooter.getEncoder();
         leftEncoder = leftShooter.getEncoder();
         shooterController = new BangBangController(ShooterConstants.kErrorTolerance);
-        feedforward = new SimpleMotorFeedforward(ShooterConstants.kS, ShooterConstants.kV, ShooterConstants.kA);
+        //feedforward = new SimpleMotorFeedforward(ShooterConstants.kS, ShooterConstants.kV, ShooterConstants.kA);
     }
 
     /**

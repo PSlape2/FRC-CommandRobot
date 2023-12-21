@@ -23,14 +23,22 @@ public class TankDriveCommand extends CommandBase {
     
     public void execute() {
         double leftOut, rightOut;
+        int leftMult = -1;
+        int rightMult = -1;
 
-        if(leftInput.get() > OperatorConstants.kDriverTankDriveDeadZone) {
-            leftOut = processInput(leftInput.get());
+        if(Math.abs(leftInput.get()) > OperatorConstants.kDriverTankDriveDeadZone) {
+            if(leftInput.get() >= 0) leftMult = -1;
+            else leftMult = 1;
+
+            leftOut = leftMult * processInput(Math.abs(leftInput.get()));
         } else {
             leftOut = 0;
         }
-        if(rightInput.get() > OperatorConstants.kDriverTankDriveDeadZone) {
-            rightOut = processInput(rightInput.get());
+        if(Math.abs(rightInput.get()) > OperatorConstants.kDriverTankDriveDeadZone) {
+            if(rightInput.get() >= 0) rightMult = -1;
+            else rightMult = 1;
+
+            rightOut = rightMult * processInput(Math.abs(rightInput.get()));
         } else {
             rightOut = 0;
         }

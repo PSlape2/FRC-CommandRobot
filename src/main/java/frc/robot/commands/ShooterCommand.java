@@ -20,7 +20,7 @@ public class ShooterCommand extends CommandBase {
     }
 
     public void execute() {
-        if(shooterSupplier.get() > OperatorConstants.kShooterDeadzone) {
+        if(Math.abs(shooterSupplier.get()) > OperatorConstants.kShooterDeadzone) {
             shooterSubsystem.setSpeed(ShooterConstants.kShooterSpeed);
         } else {
             shooterSubsystem.stopShooter();

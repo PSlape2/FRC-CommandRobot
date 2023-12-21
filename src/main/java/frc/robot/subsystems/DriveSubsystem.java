@@ -1,11 +1,14 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.FollowPathRamsete;
 import com.pathplanner.lib.commands.FollowPathWithEvents;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.ReplanningConfig;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -21,10 +24,11 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import frc.robot.Constants.DriveConstants;
 
 public class DriveSubsystem extends SubsystemBase {
-    private CANSparkMax[] motors;
+    private final CANSparkMax[] motors;
     private final MotorControllerGroup right, left;
     private final DifferentialDrive differentialDrive;
     
@@ -50,12 +54,12 @@ public class DriveSubsystem extends SubsystemBase {
     private DifferentialDriveWheelSpeeds wheelSpeeds, targetWheelSpeeds;
 
     public DriveSubsystem() {
-    
         motors = new CANSparkMax[6];
-        for(int i = 0; i < motors.length-1; i++) {
+        for(int i = 0; i < motors.length; i++) {
             motors[i] = new CANSparkMax(DriveConstants.motorPorts[i], MotorType.kBrushless);
             motors[i].restoreFactoryDefaults();
             motors[i].setSmartCurrentLimit(DriveConstants.kCurrentLimit);
+            motors[i].setSecondaryCurrentLimit(DriveConstants.kCurrentLimit);
             motors[i].setIdleMode(IdleMode.kBrake);
         }
 
@@ -63,6 +67,7 @@ public class DriveSubsystem extends SubsystemBase {
         left = new MotorControllerGroup(motors[3], motors[4], motors[5]);
         right.setInverted(true);
         differentialDrive = new DifferentialDrive(left, right);
+        differentialDrive.setSafetyEnabled(false);
 
         leftEncoder.setDistancePerPulse(DriveConstants.kDistancePerPulse);
         rightEncoder.setDistancePerPulse(DriveConstants.kDistancePerPulse);
@@ -277,6 +282,10 @@ public class DriveSubsystem extends SubsystemBase {
             ),
             path,
             this::getPose
-        );
+        );  
+    }
+
+    public Command getAutoCommand() {
+        return new PathPlannerAuto("Basic Drive Auto");
     }
 }

@@ -2,9 +2,6 @@ package frc.robot.commands.auto;
 
 import java.util.List;
 
-import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.path.PathPlannerPath;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
