@@ -57,7 +57,6 @@ public class DriveSubsystem extends SubsystemBase {
         motors = new CANSparkMax[6];
         for(int i = 0; i < motors.length; i++) {
             motors[i] = new CANSparkMax(DriveConstants.motorPorts[i], MotorType.kBrushless);
-            motors[i].restoreFactoryDefaults();
             motors[i].setSmartCurrentLimit(DriveConstants.kCurrentLimit);
             motors[i].setSecondaryCurrentLimit(DriveConstants.kCurrentLimit);
             motors[i].setIdleMode(IdleMode.kBrake);
@@ -66,7 +65,9 @@ public class DriveSubsystem extends SubsystemBase {
         right = new MotorControllerGroup(motors[0], motors[1], motors[2]);
         left = new MotorControllerGroup(motors[3], motors[4], motors[5]);
         right.setInverted(true);
+
         differentialDrive = new DifferentialDrive(left, right);
+
         differentialDrive.setSafetyEnabled(false);
 
         leftEncoder.setDistancePerPulse(DriveConstants.kDistancePerPulse);
