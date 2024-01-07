@@ -4,8 +4,10 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.commands.auto.AutoIntakeCommand;
 
 public class IntakeSubsystem extends SubsystemBase {
     CANSparkMax intake;
@@ -38,5 +40,9 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     public void stopIntake() {
         intake.stopMotor();
+    }
+
+    public Command getAutoCommand() {
+        return new AutoIntakeCommand();
     }
 }

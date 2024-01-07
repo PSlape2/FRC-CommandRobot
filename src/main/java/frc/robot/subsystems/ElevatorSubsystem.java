@@ -9,8 +9,10 @@ import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
+import frc.robot.commands.auto.AutoSetElevator;
 
 public class ElevatorSubsystem extends SubsystemBase {
     private CANSparkMax elevatorMotor;
@@ -58,6 +60,7 @@ public class ElevatorSubsystem extends SubsystemBase {
      * @param pos The position to set to
      */
     public void goTo(double pos) {
+        elevatorController.setGoal(pos);
         double acceleration = (elevatorController.getSetpoint().velocity - lastSpeed) / (Timer.getFPGATimestamp() - lastTime);
 
         elevatorMotor.setVoltage(
@@ -67,6 +70,10 @@ public class ElevatorSubsystem extends SubsystemBase {
 
         lastSpeed = elevatorController.getSetpoint().velocity;
         lastTime = Timer.getFPGATimestamp();
+    }
+
+    public boolean hasReached() {
+        return elevatorController.atGoal();
     }
 
     /**
@@ -98,5 +105,9 @@ public class ElevatorSubsystem extends SubsystemBase {
      */
     public double getVelocity() {
         return elevatorController.getSetpoint().velocity;
+    }
+
+    public Command getAutoCommand() {
+        return new AutoSetElevator();
     }
 }

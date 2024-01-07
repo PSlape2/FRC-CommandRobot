@@ -1,7 +1,8 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants.ShooterConstants;
-
+import frc.robot.commands.auto.AutoShootCommand;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.BangBangController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -54,5 +55,9 @@ public class ShooterSubsystem extends SubsystemBase {
     public void stopShooter() {
         rightShooter.stopMotor();
         leftShooter.stopMotor();
+    }
+
+    public Command getAutoCommand() {
+        return new AutoShootCommand();
     }
 }

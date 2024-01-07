@@ -35,9 +35,9 @@ public class RobotContainer {
   public final XboxController m_operatorController =
     new XboxController(OperatorConstants.kOperatorControllerPort);
 
-  // private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
-  // private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
+  private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
 
   public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
 
@@ -55,7 +55,10 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Chooser", autoChooser);
     */
 
-    /*
+    NamedCommands.registerCommand("Shoot Auto", shooterSubsystem.getAutoCommand());
+    NamedCommands.registerCommand("Intake Auto", intakeSubsystem.getAutoCommand());
+    NamedCommands.registerCommand("Elevator Auto", elevatorSubsystem.getAutoCommand());
+    
     intakeSubsystem.setDefaultCommand(
       new IntakeCommand(
         intakeSubsystem, 
@@ -63,8 +66,8 @@ public class RobotContainer {
         () -> m_operatorController.getRightBumperPressed()
       )
     );
-    */
-    /*
+    
+    
     elevatorSubsystem.setDefaultCommand(
       new ElevatorCommand(
         elevatorSubsystem,
@@ -73,7 +76,7 @@ public class RobotContainer {
         () -> m_operatorController.getYButtonPressed()
       )
     );
-    */
+    
 
     driveSubsystem.setDefaultCommand(
       new TankDriveCommand(
@@ -134,7 +137,7 @@ public class RobotContainer {
    */
   
   public Command getAutonomousCommand() {
-    return new PathPlannerAuto("Basic Auto");
+    return new PathPlannerAuto("Pick Up And Shoot Auto");
   }
   
 
