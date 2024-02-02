@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.commands.auto.AutoShootCommand;
+import frc.robot.commands.auto.AutoShooterCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.BangBangController;
@@ -58,6 +58,6 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public Command getAutoCommand() {
-        return new AutoShootCommand();
+        return new AutoShooterCommand();
     }
 }

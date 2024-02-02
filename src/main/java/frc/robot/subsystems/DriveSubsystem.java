@@ -6,6 +6,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.FollowPathRamsete;
 import com.pathplanner.lib.commands.FollowPathWithEvents;
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.ReplanningConfig;
 
@@ -24,7 +25,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 
 public class DriveSubsystem extends SubsystemBase {
@@ -288,5 +289,9 @@ public class DriveSubsystem extends SubsystemBase {
 
     public Command getAutoCommand() {
         return new PathPlannerAuto("Basic Drive Auto");
+    }
+
+    public void navigateToPose(Pose2d pose) {
+        AutoBuilder.pathfindToPose(pose, new PathConstraints(3.0, AutoConstants.kMaxAccel, 2.8, 3)).execute();
     }
 }

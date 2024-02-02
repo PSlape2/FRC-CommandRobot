@@ -6,14 +6,18 @@ package frc.robot;
 
 import frc.robot.commands.*;
 import frc.robot.commands.auto.AutoDriveCommandContainer;
+import frc.robot.commands.auto.AutoDriveToPose;
 import frc.robot.subsystems.*;
-
+import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.OperatorConstants;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.PathConstraints;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -35,13 +39,13 @@ public class RobotContainer {
   public final XboxController m_operatorController =
     new XboxController(OperatorConstants.kOperatorControllerPort);
 
-  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  //private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
-  private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
+  //private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
 
   public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
 
-  private final  ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  //private final  ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
   // private final ClawSubsystem clawSubsystem = new ClawSubsystem();
 
@@ -55,10 +59,11 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Chooser", autoChooser);
     */
 
-    NamedCommands.registerCommand("Shoot Auto", shooterSubsystem.getAutoCommand());
-    NamedCommands.registerCommand("Intake Auto", intakeSubsystem.getAutoCommand());
-    NamedCommands.registerCommand("Elevator Auto", elevatorSubsystem.getAutoCommand());
+    //NamedCommands.registerCommand("Shoot Auto", shooterSubsystem.getAutoCommand());
+    //NamedCommands.registerCommand("Intake Auto", intakeSubsystem.getAutoCommand());
+    //NamedCommands.registerCommand("Elevator Auto", elevatorSubsystem.getAutoCommand());
     
+    /*
     intakeSubsystem.setDefaultCommand(
       new IntakeCommand(
         intakeSubsystem, 
@@ -66,8 +71,9 @@ public class RobotContainer {
         () -> m_operatorController.getRightBumperPressed()
       )
     );
+    */
     
-    
+    /*
     elevatorSubsystem.setDefaultCommand(
       new ElevatorCommand(
         elevatorSubsystem,
@@ -76,8 +82,8 @@ public class RobotContainer {
         () -> m_operatorController.getYButtonPressed()
       )
     );
+    */
     
-
     driveSubsystem.setDefaultCommand(
       new TankDriveCommand(
         driveSubsystem,
@@ -86,12 +92,14 @@ public class RobotContainer {
       )
     );
     
+    /*
     shooterSubsystem.setDefaultCommand(
       new ShooterCommand(
         shooterSubsystem,
         () -> m_operatorController.getRightTriggerAxis()
       )
     );
+    */
     /*
     clawSubsystem.setDefaultCommand(
       new ClawCommand(
@@ -127,7 +135,6 @@ public class RobotContainer {
    */
 
   private void configureBindings() {
-    
   }
 
   /**
@@ -137,8 +144,6 @@ public class RobotContainer {
    */
   
   public Command getAutonomousCommand() {
-    return new PathPlannerAuto("Pick Up And Shoot Auto");
+    return AutoBuilder.pathfindToPose(new Pose2d(driveSubsystem.getPose().getX() + 2.0, driveSubsystem.getPose().getX() + 2.0, new Rotation2d(driveSubsystem.getHeading())), new PathConstraints(5, 2, 2, 1));
   }
-  
-
 }
